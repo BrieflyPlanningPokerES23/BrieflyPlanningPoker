@@ -31,7 +31,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { useStore } from 'vuex';
 
 import BButton from '../components/b-button.vue';
@@ -47,7 +47,7 @@ export default {
 };
 </script>
 
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['close']);
 const store = useStore();
 const props = defineProps({

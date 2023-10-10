@@ -15,7 +15,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import BText from '../components/b-text.vue';
 
 export default {

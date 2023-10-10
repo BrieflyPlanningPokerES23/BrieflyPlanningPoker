@@ -8,17 +8,17 @@
   "main": "dist/index",
   "scripts": {
     "build": "echo \"Building project @briefly/prisma...\" && tsc -b --verbose",
-    "prisma:up": "echo \"Generating prisma artifacts...\" && yarn prisma generate && yarn build",
-    "db:up": "yarn prisma migrate deploy"
+    "prisma:up": "echo \"Generating prisma artifacts...\" && prisma generate && yarn build",
+    "db:up": "prisma migrate deploy"
   },
   "dependencies": {
     "@prisma/client": "5.2.0",
-    "zod": "3.21.1"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "prisma": "5.2.0",
     "ts-node": "^10.9.1",
-    "typescript": "^4.6.2",
+    "typescript": "^5.2.2",
     "zod-prisma-types": "2.7.9"
   }
 }

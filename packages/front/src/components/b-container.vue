@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { shouldBeOneOf } from 'vue-prop-validation-helper';
 
 export default {

@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import BContainer from './b-container.vue';
 
 export default {

@@ -86,7 +86,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { useStore } from 'vuex';
 import { api } from '../services/api';
 

@@ -25,7 +25,7 @@
           size="small"
           tag="div"
         >
-          {{ this.$store.state.passRecoveryOne.errorMessage }}
+          {{ errorMessage }}
         </BText>
 
         <div class="pass-recovery-one__buttons-container">
@@ -46,7 +46,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Form } from 'vee-validate';
 import * as Yup from 'yup';
 import BBrand from './../components/b-brand.vue';
@@ -55,11 +55,14 @@ import BContainer from './../components/b-container.vue';
 import BInput from './../components/b-input.vue';
 import BInputField from '../components/b-input-field.vue';
 import BText from '../components/b-text.vue';
-import PassRecoveryOne from '../store';
+import { passRecoveryOneStore } from '../stores';
+import { computed, defineComponent } from 'vue';
 
-export default {
+const pStore = passRecoveryOneStore();
+
+export default defineComponent({
   name: 'PassRecoveryOne',
-
+  
   components: {
     BBrand,
     BButton,
@@ -71,30 +74,33 @@ export default {
   },
 
   setup() {
+
     function onSubmit() {
-      PassRecoveryOne.dispatch('recovery');
+      pStore.recovery();
     }
 
     function onInvalidSubmit() {
       const submitButton = document.querySelector('.pass-recovery-one__send-button');
 
-      submitButton.classList.add('invalid');
+      submitButton!.classList.add('invalid');
       setTimeout(() => {
-        submitButton.classList.remove('invalid');
+        submitButton!.classList.remove('invalid');
       }, 1000);
     }
 
-    function updateEmail(e) {
-      PassRecoveryOne.commit('updateEmail', e.target.value);
+    function updateEmail(e:any) {
+      pStore.email = e.target.value;
     }
 
     const schema = Yup.object().shape({
       email: Yup.string().email().required(),
     });
 
-    return { onSubmit, onInvalidSubmit, updateEmail, schema };
+    const errorMessage = computed(() => pStore.errorMessage);
+
+    return { onSubmit, onInvalidSubmit, updateEmail, schema, errorMessage };
   },
-};
+});
 </script>
 
 <style scoped lang="scss">

@@ -121,7 +121,7 @@
   </Form>
 </template>
 
-<script>
+<script lang="ts">
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { Form } from 'vee-validate';
@@ -143,7 +143,7 @@ export default {
 };
 </script>
 
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   update: {
     type: Boolean,

@@ -36,7 +36,7 @@
           size="small"
           tag="div"
         >
-          {{ this.$store.state.passRecoveryTwo.errorMessage }}
+          {{ errorMessage }}
         </BText>
 
         <BButton
@@ -49,7 +49,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Form } from 'vee-validate';
 import * as Yup from 'yup';
 import BBrand from './../components/b-brand.vue';
@@ -58,7 +58,10 @@ import BContainer from './../components/b-container.vue';
 import BInput from './../components/b-input.vue';
 import BInputField from '../components/b-input-field.vue';
 import BText from '../components/b-text.vue';
-import PassRecoveryTwo from '../store';
+import { passRecoveryTwoStore } from '../stores';
+import { computed } from 'vue';
+
+const psTwo = passRecoveryTwoStore();
 
 export default {
   name: 'PassRecoveryTwo',
@@ -82,38 +85,34 @@ export default {
 
   setup(props) {
     function onSubmit() {
-      PassRecoveryTwo.dispatch('update', props.token);
+      psTwo.update(props.token);
     }
 
     function onInvalidSubmit() {
       const submitButton = document.querySelector('.pass-recovery-two__submit-button');
 
-      submitButton.classList.add('invalid');
+      submitButton!.classList.add('invalid');
       setTimeout(() => {
-        submitButton.classList.remove('invalid');
+        submitButton!.classList.remove('invalid');
       }, 1000);
     }
 
-    function updateNewPassword(e) {
-      PassRecoveryTwo.commit('updateNewPassword', e.target.value);
+    function updateNewPassword(e: any) {
+      psTwo.newPassword = e.target.value;
     }
 
-    function updateConfirmPassword(e) {
-      PassRecoveryTwo.commit('updateConfirmPassword', e.target.value);
+    function updateConfirmPassword(e: any) {
+      psTwo.confirmPassword = e.target.value;
     }
-
-    function noWhitespace() {
-      return this.transform((value, originalValue) => (/\s/.test(originalValue) ? NaN : value));
-    }
-
-    Yup.addMethod(Yup.string, 'noWhitespace', noWhitespace);
 
     const schema = Yup.object().shape({
-      password: Yup.string().min(6).trim().noWhitespace().required(),
+      password: Yup.string().min(6).trim().required(),
       confirmPassword: Yup.string().oneOf([Yup.ref('password')], 'passwords do not match'),
     });
 
-    return { onSubmit, onInvalidSubmit, updateNewPassword, updateConfirmPassword, schema };
+    const errorMessage = computed(() => psTwo.errorMessage);
+
+    return { onSubmit, onInvalidSubmit, updateNewPassword, updateConfirmPassword, schema, errorMessage };
   },
 };
 </script>

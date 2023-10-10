@@ -42,7 +42,7 @@
   </Form>
 </template>
 
-<script>
+<script lang="ts">
 import { useStore } from 'vuex';
 import { Form } from 'vee-validate';
 import * as Yup from 'yup';
@@ -65,7 +65,7 @@ export default {
 };
 </script>
 
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['close']);
 const store = useStore();
 

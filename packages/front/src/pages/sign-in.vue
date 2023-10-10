@@ -37,7 +37,7 @@
           size="small"
           tag="div"
         >
-          {{ this.$store.state.signIn.errorMessage }}
+          {{ errorMessage }}
         </BText>
 
         <BButton
@@ -59,7 +59,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Form } from 'vee-validate';
 import * as Yup from 'yup';
 // import { users } from 'myprisma';
@@ -71,7 +71,11 @@ import BContainer from '../components/b-container.vue';
 import BInput from '../components/b-input.vue';
 import BInputField from '../components/b-input-field.vue';
 import BText from '../components/b-text.vue';
-import SignIn from '../store';
+import { signInStore } from '../stores';
+import { computed } from 'vue';
+
+const signIn = signInStore();
+
 export default {
   name: 'SignIn',
 
@@ -87,40 +91,34 @@ export default {
 
   setup() {
     function onSubmit() {
-      SignIn.dispatch('login');
+      signIn.login();
     }
 
     function onInvalidSubmit() {
       const submitButton = document.querySelector('.sign-in__login-button');
 
-      submitButton.classList.add('invalid');
+      submitButton?.classList.add('invalid');
       setTimeout(() => {
-        submitButton.classList.remove('invalid');
+        submitButton?.classList.remove('invalid');
       }, 1000);
     }
 
-    function updateEmail(e) {
-      SignIn.commit('updateEmail', e.target.value);
+    function updateEmail(e: any) {
+      signIn.email = e.target.value;
     }
 
-    function updatePassword(e) {
-      SignIn.commit('updatePassword', e.target.value);
+    function updatePassword(e: any) {
+      signIn.password = e.target.value;
     }
-
-    function noWhitespace() {
-      return this.transform((value, originalValue) => (/\s/.test(originalValue) ? NaN : value));
-    }
-
-    Yup.addMethod(Yup.string, 'noWhitespace', noWhitespace);
 
     const schema = Yup.object().shape({
       email: Yup.string().email().required(),
-      password: Yup.string().min(6).trim().noWhitespace().required(),
+      password: Yup.string().min(6).trim().required(),
     });
 
-    // const schema = toTypedSchema(users.createSchema);
+    const errorMessage = computed(() => signIn.errorMessage);
 
-    return { onSubmit, onInvalidSubmit, updateEmail, updatePassword, schema };
+    return { onSubmit, onInvalidSubmit, updateEmail, updatePassword, schema, errorMessage };
   },
 };
 </script>

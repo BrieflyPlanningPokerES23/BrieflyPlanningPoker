@@ -3,7 +3,6 @@ import { z } from "zod";
 
 /** Esquema para criacao de squads */
 export const createSchema = SquadOptionalDefaultsSchema.strict();
-
 /**
  * Esquema para listar squads **(vazio)**
  * 

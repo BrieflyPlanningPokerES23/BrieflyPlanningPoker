@@ -67,7 +67,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 
@@ -88,7 +88,7 @@ export default {
 };
 </script>
 
-<script setup>
+<script setup lang="ts">
 const store = useStore();
 const squads = computed(() => store.getters.getSquadList);
 

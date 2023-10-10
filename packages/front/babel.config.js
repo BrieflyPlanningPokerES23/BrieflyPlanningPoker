@@ -1,5 +1,8 @@
 module.exports = {
-  presets: ['@babel/preset-env'],
+  presets: [
+    '@babel/preset-env',
+    '@babel/preset-typescript'
+  ],
   plugins: [
     function () {
       return {
@@ -10,5 +13,6 @@ module.exports = {
         },
       };
     },
+    '@vue/babel-plugin-jsx',
   ]
 };

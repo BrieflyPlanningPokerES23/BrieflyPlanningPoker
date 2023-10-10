@@ -4,7 +4,7 @@
       <BSidebar />
     </aside>
 
-    <main v-if="squad.squad">
+    <main v-if="squad.id">
       <div class="home__section">
         <BSquad :squad="squad" />
       </div>
@@ -40,14 +40,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { computed, onMounted } from 'vue';
-import { useStore } from 'vuex';
 
 import BSidebar from '../components/b-sidebar.vue';
 import BSquad from '../components/b-squad.vue';
 import BTaskContainer from '../components/b-task-container.vue';
 import BText from '../components/b-text.vue';
+import { squadStore, taskStore } from '../stores';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -62,23 +62,25 @@ export default {
 };
 </script>
 
-<script setup>
-const store = useStore();
+<script setup lang="ts">
+
+const squadS = squadStore();
+const taskS = taskStore();
 
 const squad = computed(() => {
-  const req = store.getters.getSquadActive;
-  if (req.id) {
-    store.dispatch('gatherTasks', req.id);
-  }
+  const req = squadS.squadActive;
+
+  if (req.id)
+    taskS.gatherTasks(req.id);
 
   return req;
 });
 
-const activeTasks = computed(() => store.getters.getEnabledTasks);
+const activeTasks = computed(() => taskS.enabledTasks);
 
-const archivedTasks = computed(() => store.getters.getDisabledTasks);
+const archivedTasks = computed(() => taskS.disabledTasks);
 
-onMounted(() => store.dispatch('gatherSquadList'));
+onMounted(() => squadS.gatherSquadList());
 </script>
 
 <style lang="scss" scoped>

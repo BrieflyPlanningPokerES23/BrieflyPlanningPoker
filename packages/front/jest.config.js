@@ -1,9 +1,7 @@
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  testEnvironment: 'jsdom',
-  moduleFileExtensions: ['js', 'json', 'vue'],
+  testEnvironment: 'node',
   transform: {
-    '^.+\\.js$': 'babel-jest',
-    '^.+\\.vue$': 'vue3-jest',
-    '\\.(jpg|ico|jpeg|png|gif)$': '<rootDir>/tests/mock/fileMock.js',
+    '^.+\\.vue$': 'vue-jest'
   },
 };

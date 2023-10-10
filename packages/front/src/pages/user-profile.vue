@@ -52,15 +52,15 @@
             />
           </BInputField>
           <BText
-            v-if="this.$store.state.user.errorMessage"
+            v-if="errorMessage"
             color="error"
             size="small"
             tag="div"
           >
-            {{ this.$store.state.user.errorMessage }}
+            {{ errorMessage }}
           </BText>
           <BText
-            v-if="this.$store.state.user.success"
+            v-if="success"
             color="success"
             size="small"
             tag="div"
@@ -86,10 +86,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import * as Yup from 'yup';
-import { ref } from 'vue';
-import { useStore } from 'vuex';
+import { computed, ref } from 'vue';
 import { Form } from 'vee-validate';
 import BButton from '../components/b-button.vue';
 import BContainer from '../components/b-container.vue';
@@ -100,6 +99,8 @@ import BSidebar from '../components/b-sidebar.vue';
 import BText from '../components/b-text.vue';
 import router from '../router';
 import FConfirmation from '../forms/f-confirmation.vue';
+import { userStore } from '../stores';
+import { toTypedSchema } from '@vee-validate/zod';
 
 export default {
   name: 'UserProfile',
@@ -115,10 +116,12 @@ export default {
     Form,
   },
 };
+
+const user = userStore();
+
 </script>
 
-<script setup>
-const store = useStore();
+<script setup lang="ts">
 
 const deleteAccountModal = ref(false);
 const showDeleteAccountModal = () => deleteAccountModal.value = true;
@@ -130,15 +133,21 @@ const schema = Yup.object().shape({
   confirmPassword: Yup.string().required('Confirm password is required.').oneOf([Yup.ref('newPassword'), null], 'Confirm password must be equal the new password.'),
 });
 
-function onSubmit(values) {
-  const { newPassword, oldPassword } = values;
-  store.dispatch('updateYourself', { newPassword, oldPassword });
+function onSubmit(values: Record<string, any>) {
+  user.updateYourself({
+    oldPassword: values.oldPassword,
+    newPassword: values.newPassword
+  });
 }
 
 async function onDelete() {
-  await store.dispatch('deleteYourself');
+  await user.deleteYourself();
   router.push('/signin');
 }
+
+const errorMessage = computed(() => user.errorMessage)
+const success = computed(() => user.success)
+
 </script>
 
 <style lang="scss" scoped>

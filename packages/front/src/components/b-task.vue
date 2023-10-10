@@ -111,7 +111,7 @@
   </BModal>
 </template>
 
-<script>
+<script lang="ts">
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
@@ -144,7 +144,7 @@ export default {
 };
 </script>
 
-<script setup>
+<script setup lang="ts">
 const store = useStore();
 
 const squadId = computed(() => store.getters.getActiveId);

@@ -21,7 +21,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineEmits, ref } from 'vue';
 import { shouldBeOneOf } from 'vue-prop-validation-helper';
 
@@ -42,7 +42,7 @@ export default {
 };
 </script>
 
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['action']);
 
 const toggled = ref(false);

@@ -18,7 +18,7 @@
   </Form>
 </template>
 
-<script>
+<script lang="ts">
 import { Form } from 'vee-validate';
 import * as Yup from 'yup';
 
@@ -42,7 +42,7 @@ export default {
 };
 </script>
 
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['comment']);
 
 function onSubmit(event) {

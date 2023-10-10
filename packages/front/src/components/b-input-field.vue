@@ -40,7 +40,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { toRef } from 'vue';
 import { useField } from 'vee-validate';
 

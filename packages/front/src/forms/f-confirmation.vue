@@ -22,7 +22,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import BButton from '../components/b-button.vue';
 import BText from '../components/b-text.vue';
 

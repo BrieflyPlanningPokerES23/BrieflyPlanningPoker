@@ -6,11 +6,11 @@ const api = axios.create({
   baseURL: envVars.DEV ? envVars.VITE_DEV_API_URL : envVars.VITE_PROD_API_URL,
   headers: {
     'Content-Type': 'application/json',
-  },
+  }  
 });
 
-api.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`;
+api.interceptors.request.use((config: any) => {
+  config.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('userToken') ?? '')}`;
 
   if (config.data) {
     const data = { ...config.data };

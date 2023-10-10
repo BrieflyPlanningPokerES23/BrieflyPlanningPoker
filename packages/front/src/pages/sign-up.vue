@@ -58,7 +58,7 @@
           size="small"
           tag="div"
         >
-          {{ this.$store.state.signUp.errorMessage }}
+          {{ errorMessage }}
         </BText>
 
         <div class="sign-up__buttons-container">
@@ -87,7 +87,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Form } from 'vee-validate';
 import * as Yup from 'yup';
 import BBrand from '../components/b-brand.vue';
@@ -96,7 +96,22 @@ import BContainer from '../components/b-container.vue';
 import BInput from '../components/b-input.vue';
 import BInputField from '../components/b-input-field.vue';
 import BText from '../components/b-text.vue';
-import SignUp from '../store';
+import {signUpStore} from '../stores';
+import { computed } from 'vue';
+import { createSchema } from '@briefly/prisma/dist/apiSchemas/users';
+import { toTypedSchema } from '@vee-validate/zod';
+import { z } from 'zod';
+
+const signUp = signUpStore();
+
+const usersCreateSchema = createSchema
+  .omit({enabled: true})
+  .extend({
+    confirmPassword: z.string()
+  });
+  // .refine((obj) => obj.password == obj.confirmPassword, {
+  //   message: 'Passwords dont match!'
+  // });
 
 export default {
   name: 'SignUp',
@@ -113,50 +128,52 @@ export default {
 
   setup() {
     function onSubmit() {
-      SignUp.dispatch('registry');
+      signUp.register();
     }
 
     function onInvalidSubmit() {
       const submitButton = document.querySelector('.sign-up__create-button');
 
-      submitButton.classList.add('invalid');
+      submitButton!.classList.add('invalid');
       setTimeout(() => {
-        submitButton.classList.remove('invalid');
+        submitButton!.classList.remove('invalid');
       }, 1000);
     }
 
-    function updateName(e) {
-      SignUp.commit('updateName', e.target.value);
+    function updateName(e: any) {
+      signUp.name = e.target.value;
     }
 
-    function updateEmail(e) {
-      SignUp.commit('updateEmail', e.target.value);
+    function updateEmail(e: any) {
+      signUp.email = e.target.value;
     }
 
-    function updatePassword(e) {
-      SignUp.commit('updatePassword', e.target.value);
+    function updatePassword(e: any) {
+      signUp.password = e.target.value;
     }
 
-    function updateConfirmPassword(e) {
-      SignUp.commit('updateConfirmPassword', e.target.value);
+    function updateConfirmPassword(e: any) {
+      signUp.confirmPassword = e.target.value;
     }
 
-    function noWhitespace() {
-      return this.transform((value, originalValue) => (/\s/.test(originalValue) ? NaN : value));
-    }
-
-    Yup.addMethod(Yup.string, 'noWhitespace', noWhitespace);
-
-    const schema = Yup.object().shape({
+    const myschema = Yup.object().shape({
       name: Yup.string().max(55).required(),
       email: Yup.string().email().required(),
-      password: Yup.string().min(6).trim().noWhitespace().required(),
+      password: Yup.string().min(6).trim().required(),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref('password')], 'passwords do not match')
         .required(),
     });
 
-    return { onSubmit, onInvalidSubmit, updateName, updateEmail, updatePassword, updateConfirmPassword, schema };
+    const errorMessage = computed(() => signUp.errorMessage);
+
+    return { onSubmit,
+      onInvalidSubmit,
+      updateName,
+      updateEmail,
+      updatePassword,
+      updateConfirmPassword,
+      errorMessage };
   },
 };
 </script>

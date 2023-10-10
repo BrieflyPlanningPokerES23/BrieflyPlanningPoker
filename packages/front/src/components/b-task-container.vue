@@ -54,7 +54,7 @@
   </BModal>
 </template>
 
-<script>
+<script lang="ts">
 import { ref } from 'vue';
 
 import BModal from '../components/b-modal.vue';
@@ -89,7 +89,7 @@ export default {
 };
 </script>
 
-<script setup>
+<script setup lang="ts">
 const showModal = ref(false);
 const toggleModal = () => {
   showModal.value = !showModal.value;

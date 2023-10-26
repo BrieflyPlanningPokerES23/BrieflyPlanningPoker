@@ -50,18 +50,59 @@ async function passRecovery(req: Request, res: Response, next: NextFunction): Pr
   const email = req.body.email;
   const db = req.app.get('userDbStore');
   const user = await db.findByEmail(email);
-  const token = user ? auth.create(email, 'pass-recovery', 300) : auth.create('inexistentAccount', 'inexistentAccount', 0);
+  const token = user ? auth.create(email, 'pass-recovery') : auth.create('inexistentAccount', 'inexistentAccount', 0);
   const url = process.env.URL;
   const newUrl = `${url}/confirm_reset?token=${token}`;
-  
+
+  const modelEmail = `<html>
+      <body
+          style='display: flex; justify-content: center; font-family: opensans-regular, arial;'    
+      >
+          <div style='width: 70%; border: #b0aeae solid 1px;'>
+              <header style='background-color: #1f1f1f; display: flex; justify-content: center; padding: 20px 0;'>
+                  <img style='width: 115px;' src='https://raw.githubusercontent.com/BrieflyPlanningPokerES23/BrieflyPlanningPoker/main/packages/front/src/assets/images/brand-icon-rectangle.png'></img>
+              </header>
+              <main style='display: flex; justify-content: center; padding: 10px 0;'>
+                  <div style='text-align: center;'>
+                      <p style='font-weight: bold; font-size: 20px; line-height: 2;'>
+                          HEY, @user!
+                      </p>
+                      <p style='font-size: 15px; line-height: 2; color: #232222;'>
+                          Did you ask for a password recovery?
+                      </p>
+                      <a 
+                        href=${newUrl}
+                        style='color: white; background-color: #191919; border-radius: 3px; font-size: 12px; padding: 8px 10px; 
+                        text-decoration: none; font-weight: bold; font-family: helvetica,arial,sans-serif; border: none;'
+                      >
+                          PASSWORD RECOVERY
+                      </a>
+                      <p style='font-size: 15px; line-height: 2; color: #666666;'>
+                          Or click on the link: <a style='text-decoration: none;' href=${newUrl}>${newUrl}</a>
+                      </p>
+                  </div>
+              </main>
+              <footer style="display: flex; justify-content: center;">
+                  <div style='border-top: #b0aeae solid 1px; width: 90%; padding: 5px 0; display: flex; justify-content: center;'>
+                      <img style='width: 40px;' src='https://raw.githubusercontent.com/BrieflyPlanningPokerES23/BrieflyPlanningPoker/main/packages/front/src/assets/images/brand-icon-circle.png'></img>
+                  </div>
+              </footer>
+          </div>  
+        </body>
+    </html>`
+
   await send({ 
       to: email, 
       subject: 'BRIEFLY - Password Recovery', 
-      message: `Hey, did you ask for a password recovery?\n\nThis is your link ${newUrl}` })
+      message: modelEmail
+      //message: `Hey, did you ask for a password recovery?\n\nThis is your link ${newUrl}` 
+    }) 
     .then(() => {
+      console.log("email enviado com sucesso!");
       return res.status(200).json({});
     })
     .catch((error: any) => {
+      console.log("erro linha 71: ", error);
       return next(error);
     });
 }

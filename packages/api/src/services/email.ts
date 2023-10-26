@@ -19,6 +19,10 @@ export default async function send(email: Email) {
     },
     Message: {
       Body: {
+        Html: {
+          Charset: "UTF-8",
+          Data: email.message
+        },
         Text: {
           Charset: 'UTF-8',
           Data: email.message

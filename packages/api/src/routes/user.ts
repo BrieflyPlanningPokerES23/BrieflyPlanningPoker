@@ -46,37 +46,43 @@ async function login(req: Request, res: Response, next: NextFunction): Promise<R
   }
 }
 
-// async function passRecovery(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
-//   const email = req.body.email;
-//   const db = req.app.get('userDbStore');
-//   const user = await db.findByEmail(email);
-//   const token = user ? auth.create(email, 'pass-recovery', 300) : auth.create('inexistentAccount', 'inexistentAccount', 0);
-//   await send({ to: email, subject: 'BRIEFLY - Password Recovery', message: `Hey, did you ask for a password recovery?\n\nThis is your link ${req.body.url}${token}` })
-//     .then(() => {
-//       return res.status(200).json({});
-//     })
-//     .catch((error: any) => {
-//       return next(error);
-//     });
-// }
+async function passRecovery(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+  const email = req.body.email;
+  const db = req.app.get('userDbStore');
+  const user = await db.findByEmail(email);
+  const token = user ? auth.create(email, 'pass-recovery', 300) : auth.create('inexistentAccount', 'inexistentAccount', 0);
+  const url = process.env.URL;
+  const newUrl = `${url}/confirm_reset?token=${token}`;
+  
+  await send({ 
+      to: email, 
+      subject: 'BRIEFLY - Password Recovery', 
+      message: `Hey, did you ask for a password recovery?\n\nThis is your link ${newUrl}` })
+    .then(() => {
+      return res.status(200).json({});
+    })
+    .catch((error: any) => {
+      return next(error);
+    });
+}
 
-// async function passUpdate(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
-//   const password = await crypt.create(req.body.password);
-//   const token = req.body.token;
-//   const db = req.app.get('userDbStore');
-//   const verify = auth.verify(token.replace('Bearer', '').trim());
+async function passUpdate(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+  const password = await crypt.create(req.body.password);
+  const token = req.body.token;
+  const db = req.app.get('userDbStore');
+  const verify = auth.verify(token.replace('Bearer', '').trim());
 
-//   try {
-//     if (verify?.role === 'pass-recovery') {
-//       await db.updatePassByEmail(verify.user, { password: password, updatedAt: new Date() });
-//       return res.sendStatus(200);
-//     } else {
-//       throw new Unauthorized('your link is invalid or has expired');
-//     }
-//   } catch (error: any) {
-//     next(error);
-//   }
-// }
+  try {
+    if (verify?.role === 'pass-recovery') {
+      await db.updatePassByEmail(verify.user, { password: password, updatedAt: new Date() });
+      return res.sendStatus(200);
+    } else {
+      throw new Unauthorized('your link is invalid or has expired');
+    }
+  } catch (error: any) {
+    next(error);
+  }
+}
 
 async function deleteUser(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
   try {
@@ -132,5 +138,4 @@ async function updateUser(req: Request, res: Response, next: NextFunction): Prom
   }
 }
 
-export { create, login, updateUser, deleteUser };
-// export { create, login, passRecovery, passUpdate, updateUser, deleteUser };
+export { create, login, passRecovery, passUpdate, updateUser, deleteUser };

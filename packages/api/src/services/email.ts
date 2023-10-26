@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+import AWS from 'aws-sdk';
 
 interface Email {
   to: string;
@@ -7,22 +7,38 @@ interface Email {
 }
 
 export default async function send(email: Email) {
-  const transporter = nodemailer.createTransport({
-    service: process.env.SERVICE,
-    auth: {
-      user: process.env.FROM,
-      pass: process.env.PASSWORD,
-    },
+  const ses = new AWS.SES({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+    region: process.env.AWS_REGION || ''
   });
 
-  const options = {
-    from: process.env.FROM,
-    to: email.to,
-    subject: email.subject,
-    text: email.message,
+  const params = {
+    Destination: {
+      ToAddresses: [email.to]
+    },
+    Message: {
+      Body: {
+        Text: {
+          Charset: 'UTF-8',
+          Data: email.message
+        }
+      },
+      Subject: {
+        Charset: 'UTF-8',
+        Data: email.subject
+      }
+    },
+    Source: process.env.FROM || 'ingrid.pacheco2015@gmail.com' 
   };
 
-  transporter.sendMail(options).catch((err) => {
-    throw new Error(err.message);
-  });
+  try {
+    await ses.sendEmail(params).promise();
+    console.log("Params do email.ts", params)
+  } catch (error) {
+    console.log("Erro do email.ts", error);
+    throw new Error((error as Error).message);
+  }
 }
+
+

@@ -1,6 +1,6 @@
 # Briefly Planning Poker
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Briefly planning poker is an online Planning Poker/Scrum Poker tool that lets you estimate effort, time of development and other characteristics of your agile team tasks.
@@ -82,6 +82,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/lulcca"><img src="https://avatars.githubusercontent.com/u/56274210?v=4?s=100" width="100px;" alt="lucca jacomassi"/><br /><sub><b>lucca jacomassi</b></sub></a><br /><a href="https://github.com/BrieflyPlanningPokerES23/BrieflyPlanningPoker/commits?author=lulcca" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/igor-santos-ufabc/"><img src="https://avatars.githubusercontent.com/u/48994130?v=4?s=100" width="100px;" alt="Igor"/><br /><sub><b>Igor</b></sub></a><br /><a href="https://github.com/BrieflyPlanningPokerES23/BrieflyPlanningPoker/commits?author=igorney" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://linktree.com.br/new/RafaHenrique"><img src="https://avatars.githubusercontent.com/u/55901457?v=4?s=100" width="100px;" alt="Rafael Henrique Siqueira Silva"/><br /><sub><b>Rafael Henrique Siqueira Silva</b></sub></a><br /><a href="https://github.com/BrieflyPlanningPokerES23/BrieflyPlanningPoker/commits?author=rafaelhs-debug" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Ingrid27"><img src="https://avatars.githubusercontent.com/u/38013208?v=4?s=100" width="100px;" alt="Ingrid Pacheco Batista"/><br /><sub><b>Ingrid Pacheco Batista</b></sub></a><br /><a href="https://github.com/BrieflyPlanningPokerES23/BrieflyPlanningPoker/commits?author=Ingrid27" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Will0890"><img src="https://avatars.githubusercontent.com/u/138529252?v=4?s=100" width="100px;" alt="Will0890"/><br /><sub><b>Will0890</b></sub></a><br /><a href="https://github.com/BrieflyPlanningPokerES23/BrieflyPlanningPoker/commits?author=Will0890" title="Code">💻</a></td>
     </tr>
   </tbody>

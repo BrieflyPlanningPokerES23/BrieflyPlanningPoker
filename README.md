@@ -1,6 +1,6 @@
 # Briefly Planning Poker
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Briefly planning poker is an online Planning Poker/Scrum Poker tool that lets you estimate effort, time of development and other characteristics of your agile team tasks.
@@ -90,6 +90,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/LeTrovoes"><img src="https://avatars.githubusercontent.com/u/25932176?v=4?s=100" width="100px;" alt="Leandro Trovões"/><br /><sub><b>Leandro Trovões</b></sub></a><br /><a href="https://github.com/BrieflyPlanningPokerES23/BrieflyPlanningPoker/commits?author=LeTrovoes" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/thenriique"><img src="https://avatars.githubusercontent.com/u/58703497?v=4?s=100" width="100px;" alt="Thiago Henrique"/><br /><sub><b>Thiago Henrique</b></sub></a><br /><a href="https://github.com/BrieflyPlanningPokerES23/BrieflyPlanningPoker/commits?author=thenriique" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Will0890"><img src="https://avatars.githubusercontent.com/u/138529252?v=4?s=100" width="100px;" alt="Will0890"/><br /><sub><b>Will0890</b></sub></a><br /><a href="https://github.com/BrieflyPlanningPokerES23/BrieflyPlanningPoker/commits?author=Will0890" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/isamaues"><img src="https://avatars.githubusercontent.com/u/42849591?v=4?s=100" width="100px;" alt="isamaues"/><br /><sub><b>isamaues</b></sub></a><br /><a href="#ideas-isamaues" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>

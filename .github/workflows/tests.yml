@@ -19,7 +19,7 @@ jobs:
         
       - name: Set up prisma
         shell: bash
-        run: yarn workspaces focus @briefly/prisma
+        run: yarn workspace @briefly/prisma prisma generate
       
 
       - name: Run unit tests

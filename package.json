@@ -10,7 +10,9 @@
   "scripts": {
     "prep": "yarn install && yarn prisma:up",
     "all": "yarn prep && yarn workspaces foreach install",
-    "test:integration": "./scripts/run-integration-tests.sh"
+    "test:integration": "./scripts/run-integration-tests.sh",
+    "test:unit": "vitest -c ./vitest.config.unit.ts",
+    "test:unit:ui": "vitest -c ./vitest.config.unit.ts --ui"
   },
   "workspaces": [
     "packages/*"

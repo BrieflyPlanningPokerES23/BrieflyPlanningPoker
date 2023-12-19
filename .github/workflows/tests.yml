@@ -16,6 +16,11 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: yarn
+        
+      - name: Set up prisma
+        shell: bash
+        run: yarn workspaces focus @briefly/prisma
+      
 
       - name: Run unit tests
         shell: bash
